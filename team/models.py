@@ -44,6 +44,24 @@ class HomeHeroVisual(models.Model):
         verbose_name_plural = 'Головний візуал'
 
 
+class HomeGalleryImage(models.Model):
+    """Image displayed in the home page team life gallery."""
+    title = models.CharField(max_length=120, blank=True)
+    image = models.ImageField(upload_to='home_gallery/')
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title or f'Фото #{self.order}'
+
+    class Meta:
+        verbose_name = 'Фото життя команди'
+        verbose_name_plural = 'Фото життя команди'
+        ordering = ['order', 'id']
+
+
 class Team(models.Model):
     """Team model"""
     name = models.CharField(max_length=100)

@@ -117,15 +117,15 @@
     <div class="container">
         <h2 class="fw-bold">Життя команди</h2>
         <div class="home-gallery-grid">
-            <div class="home-gallery-item home-gallery-item--one"></div>
-            <div class="home-gallery-item home-gallery-item--two"></div>
-            <div class="home-gallery-item home-gallery-item--three"></div>
-            <div class="home-gallery-item home-gallery-item--four"></div>
-            <div class="home-gallery-item home-gallery-item--five"></div>
-            <div class="home-gallery-item home-gallery-item--six"></div>
-            <div class="home-gallery-item home-gallery-item--seven"></div>
-            <div class="home-gallery-item home-gallery-item--eight"></div>
-            <div class="home-gallery-item home-gallery-item--nine"></div>
+            {% for gallery_image in gallery_images %}
+            <figure class="home-gallery-item">
+                <img src="{{ gallery_image.image.url }}" alt="{{ gallery_image.title|default:'Життя команди' }}" loading="lazy">
+            </figure>
+            {% empty %}
+            <div class="home-empty-state">
+                <p class="mb-0">Фото поки не додано.</p>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

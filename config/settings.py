@@ -145,6 +145,7 @@ JAZZMIN_SETTINGS = {
         'team.JoinApplication': 'fas fa-clipboard-list',
         'team.HeroBackground': 'fas fa-image',
         'team.HomeHeroVisual': 'fas fa-images',
+        'team.HomeGalleryImage': 'fas fa-camera',
     },
     'show_sidebar': True,
     'navigation_expanded': True,

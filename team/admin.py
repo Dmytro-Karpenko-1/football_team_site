@@ -1,5 +1,17 @@
 from django.contrib import admin
-from .models import HeroBackground, HomeHeroVisual, Team, Player, Coach, Match, Standing, BlogPost, Sponsor, JoinApplication
+from .models import (
+    HeroBackground,
+    HomeHeroVisual,
+    HomeGalleryImage,
+    Team,
+    Player,
+    Coach,
+    Match,
+    Standing,
+    BlogPost,
+    Sponsor,
+    JoinApplication,
+)
 
 
 @admin.register(HeroBackground)
@@ -14,6 +26,15 @@ class HomeHeroVisualAdmin(admin.ModelAdmin):
     list_display = ('title', 'image', 'is_active', 'updated_at')
     list_filter = ('is_active',)
     readonly_fields = ('updated_at',)
+
+
+@admin.register(HomeGalleryImage)
+class HomeGalleryImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image', 'order', 'is_active', 'updated_at')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('title',)
+    readonly_fields = ('created_at', 'updated_at')
 
 
 @admin.register(Team)

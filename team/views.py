@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Team, Player, Coach, Match, BlogPost, Standing
+from .models import Team, Player, Coach, Match, BlogPost, Standing, HomeGalleryImage
 from .forms import JoinTeamForm
 
 
@@ -14,6 +14,7 @@ def home(request):
     
     context = {
         'recent_matches': recent_matches,
+        'gallery_images': HomeGalleryImage.objects.filter(is_active=True),
     }
     return render(request, 'home.html', context)
 
