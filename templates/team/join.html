@@ -81,13 +81,13 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="{{ form.age.id_for_label }}" class="form-label fw-bold">
-                                Вік дитини <span class="text-danger">*</span>
+                            <label for="{{ form.birth_year.id_for_label }}" class="form-label fw-bold">
+                                Рік народження дитини <span class="text-danger">*</span>
                             </label>
-                            {{ form.age }}
-                            {% if form.age.errors %}
+                            {{ form.birth_year }}
+                            {% if form.birth_year.errors %}
                             <div class="invalid-feedback d-block">
-                                {% for error in form.age.errors %}{{ error }}{% endfor %}
+                                {% for error in form.birth_year.errors %}{{ error }}{% endfor %}
                             </div>
                             {% endif %}
                         </div>

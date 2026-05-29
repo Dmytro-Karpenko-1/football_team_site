@@ -88,7 +88,7 @@ class SponsorAdmin(admin.ModelAdmin):
 
 @admin.register(JoinApplication)
 class JoinApplicationAdmin(admin.ModelAdmin):
-    list_display = ('child_name', 'parent_phone', 'age', 'is_processed', 'created_at')
-    list_filter = ('age', 'is_processed', 'created_at')
+    list_display = ('child_name', 'parent_phone', 'birth_year', 'is_processed', 'created_at')
+    list_filter = ('birth_year', 'is_processed', 'created_at')
     search_fields = ('child_name', 'parent_phone')
     readonly_fields = ('created_at',)

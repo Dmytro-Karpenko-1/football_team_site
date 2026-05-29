@@ -6,7 +6,7 @@ class JoinTeamForm(forms.ModelForm):
     """Short trial training request form."""
     class Meta:
         model = JoinApplication
-        fields = ['child_name', 'parent_phone', 'age']
+        fields = ['child_name', 'parent_phone', 'birth_year']
         widgets = {
             'child_name': forms.TextInput(attrs={
                 'class': 'form-control form-control-lg',
@@ -19,10 +19,10 @@ class JoinTeamForm(forms.ModelForm):
                 'type': 'tel',
                 'autocomplete': 'tel',
             }),
-            'age': forms.Select(attrs={'class': 'form-select form-select-lg'}),
+            'birth_year': forms.Select(attrs={'class': 'form-select form-select-lg'}),
         }
         labels = {
             'child_name': "Ім'я дитини",
             'parent_phone': 'Телефон батьків',
-            'age': 'Вік дитини',
+            'birth_year': 'Рік народження дитини',
         }

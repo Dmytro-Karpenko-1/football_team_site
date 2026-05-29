@@ -227,16 +227,13 @@ class Sponsor(models.Model):
 
 class JoinApplication(models.Model):
     """Application submitted by a parent for a trial training."""
-    AGE_CHOICES = [
-        ('5', '5 років'),
-        ('6', '6 років'),
-        ('7', '7 років'),
-        ('8', '8 років'),
+    BIRTH_YEAR_CHOICES = [
+        (year, str(year)) for year in range(2014, 2022)
     ]
 
     child_name = models.CharField(max_length=120)
     parent_phone = models.CharField(max_length=20)
-    age = models.CharField(max_length=2, choices=AGE_CHOICES)
+    birth_year = models.PositiveSmallIntegerField(choices=BIRTH_YEAR_CHOICES, default=2018)
     created_at = models.DateTimeField(auto_now_add=True)
     is_processed = models.BooleanField(default=False)
 
