@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load hero_tags %}
+
+{% block title %}Партнерство - ФК Зазим'є{% endblock %}
+
+{% block content %}
+{% hero_background 'sponsors' as hero_bg %}
+
+<section class="partners-hero text-white" style="background: {{ hero_bg }};">
+    <div class="partners-hero__overlay"></div>
+    <div class="container partners-hero__content">
+        <h1 class="display-4 fw-bold mb-3">Підтримайте дитячу футбольну команду</h1>
+        <p class="lead mb-0">
+            Допоможіть дітям тренуватися, грати матчі та розвиватися через футбол у дружній команді.
+        </p>
+    </div>
+</section>
+
+<section class="partners-section">
+    <div class="container">
+        <div class="partners-intro">
+            <h2 class="fw-bold">Про команду</h2>
+            <p class="lead text-muted">
+                ФК Зазим'є — дитяча футбольна команда для дітей 2018 року народження. Ми тренуємося протягом
+                тижня, беремо участь у матчах на вихідних і створюємо середовище, де діти ростуть через гру,
+                дисципліну та підтримку одне одного.
+            </p>
+            <p class="text-muted mb-0">
+                Партнерська підтримка допомагає зробити тренувальний процес стабільнішим і доступнішим для дітей.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="partners-section bg-light">
+    <div class="container">
+        <div class="partners-grid">
+            <div>
+                <h2 class="fw-bold">Навіщо потрібна підтримка</h2>
+                <ul class="partners-list">
+                    <li>Тренувальний інвентар: м'ячі, фішки, манішки, конуси</li>
+                    <li>Форма та екіпірування для дітей</li>
+                    <li>Організація матчів і турнірів</li>
+                    <li>Виїзди на ігри та логістика</li>
+                    <li>Покращення умов для тренувань</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="fw-bold">Що отримує партнер</h2>
+                <ul class="partners-list">
+                    <li>Публічну подяку від команди</li>
+                    <li>Згадку на сайті та в комунікаціях клубу</li>
+                    <li>Присутність бренду на командних матеріалах за домовленістю</li>
+                    <li>Участь у розвитку дитячого спорту в громаді</li>
+                    <li>Прозоре розуміння, на що спрямована допомога</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="partners-section">
+    <div class="container">
+        <h2 class="fw-bold">Як можна допомогти</h2>
+        <div class="help-grid">
+            <article class="help-card">
+                <h3>Інвентар</h3>
+                <p>М'ячі, тренувальне обладнання, манішки та інші речі для регулярних занять.</p>
+            </article>
+            <article class="help-card">
+                <h3>Форма</h3>
+                <p>Допомога з екіпіруванням для тренувань, матчів і турнірів.</p>
+            </article>
+            <article class="help-card">
+                <h3>Фінансова підтримка</h3>
+                <p>Внесок на організаційні витрати, участь у змаганнях або логістику.</p>
+            </article>
+            <article class="help-card">
+                <h3>Послуги</h3>
+                <p>Фото, відео, друк, транспорт, медійна підтримка або інша корисна допомога.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="partners-cta text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Готові підтримати команду?</h2>
+        <p class="lead mb-4">Напишіть нам, і ми обговоримо зручний формат партнерства.</p>
+        <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">Зв'язатися з нами</a>
+    </div>
+</section>
+{% endblock %}

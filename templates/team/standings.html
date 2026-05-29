@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load hero_tags %}
+
+{% block title %}Турнірна таблиця - ФК Зазим'є{% endblock %}
+
+{% block content %}
+{% hero_background 'standings' as hero_bg %}
+
+<section class="standings-hero text-white" style="background: {{ hero_bg }};">
+    <div class="standings-hero__overlay"></div>
+    <div class="container standings-hero__content">
+        <h1 class="display-3 fw-bold mb-3">Турнірна таблиця</h1>
+        <p class="lead mb-0">Дитячий Чемпіонат Лівобережжя (2018 р.н.)</p>
+    </div>
+</section>
+
+<section class="standings-page-section">
+    <div class="container">
+        <div class="standings-intro">
+            <h2 class="fw-bold">ФК Зазим'є у чемпіонаті</h2>
+            <p class="text-muted mb-0">
+                Команда бере участь у дитячому чемпіонаті своєї вікової групи. Таблиця допомагає бачити
+                поточне місце, кількість зіграних матчів, різницю голів та очки.
+            </p>
+        </div>
+
+        {% if recent_form %}
+        <div class="team-form-card">
+            <div>
+                <h3 class="fw-bold mb-2">Останні матчі ФК Зазим'є</h3>
+                <p class="text-muted mb-0">Форма команди за трьома останніми іграми</p>
+            </div>
+            <div class="team-form-list">
+                {% for item in recent_form %}
+                <div class="team-form-item">
+                    <span class="form-dot form-dot--{{ item.result }}">{{ item.label }}</span>
+                    <span>{{ item.match.match_date|date:"d.m" }} · {{ item.match.opponent.name }}</span>
+                    <strong>{{ item.match.team_goals }}:{{ item.match.opponent_goals }}</strong>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="standings-table-wrapper table-wrapper">
+            <div class="container-table">
+            <table class="table standings-table standings-table-modern">
+                <thead>
+                    <tr>
+                        <th class="text-center standings-rank"></th>
+                        <th class="standings-team-heading">Команди</th>
+                        <th class="text-center standings-number">І</th>
+                        <th class="text-center standings-number">Різн.</th>
+                        <th class="text-center standings-number">О</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for standing in standings %}
+                    <tr class="align-middle {% if standing.team.name == "ФК Зазим'є" %}highlight-team{% endif %}">
+                        <td class="text-center fw-bold">
+                            <span class="rank-badge {% if standing.position == 1 %}rank-badge--gold{% elif standing.position == 2 %}rank-badge--silver{% elif standing.position == 3 %}rank-badge--bronze{% endif %}">
+                                {{ standing.position }}
+                            </span>
+                        </td>
+                        <td>
+                            <strong>{{ standing.display_name|default:standing.team.name }}</strong>
+                        </td>
+                        <td class="text-center">{{ standing.played }}</td>
+                        <td class="text-center">
+                            {% if standing.goal_difference > 0 %}+{% endif %}{{ standing.goal_difference }}
+                        </td>
+                        <td class="text-center">
+                            <span class="points-pill">{{ standing.points }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">
+                            Дані про таблицю поки недоступні
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="standings-footer-grid">
+            <div class="standings-legend">
+                <h3 class="fw-bold">Умовні позначення</h3>
+                <p><strong>І</strong> — кількість зіграних матчів</p>
+                <p><strong>Різн.</strong> — різниця забитих і пропущених голів</p>
+                <p class="mb-0"><strong>О</strong> — турнірні очки команди</p>
+            </div>
+            <div class="standings-cta">
+                <h3 class="fw-bold">Хочете долучитися до команди?</h3>
+                <p>Запишіть дитину на пробне тренування та познайомтеся з командою.</p>
+                <a href="{% url 'team:join' %}" class="btn btn-primary btn-lg fw-bold">
+                    Записатися на тренування
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

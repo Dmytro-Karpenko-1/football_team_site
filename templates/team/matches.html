@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load hero_tags %}
+
+{% block title %}Матчі команди - ФК Зазим'є{% endblock %}
+
+{% block content %}
+{% hero_background 'matches' as hero_bg %}
+
+<section class="matches-hero text-white" style="background: {{ hero_bg }};">
+    <div class="matches-hero__overlay"></div>
+    <div class="container matches-hero__content">
+        <h1 class="display-4 fw-bold mb-3">Матчі команди</h1>
+        <p class="lead mb-0">Дитячий Чемпіонат Лівобережжя (2018 р.н.)</p>
+    </div>
+</section>
+
+<section class="matches-section">
+    <div class="container">
+        <div class="matches-intro">
+            <h2 class="fw-bold">Про турнір</h2>
+            <p class="text-muted mb-0">
+                ФК Зазим'є бере участь у дитячому чемпіонаті своєї вікової групи. Матчі допомагають дітям
+                отримувати ігровий досвід, вчитися командній взаємодії та впевненіше почуватися на полі.
+            </p>
+        </div>
+
+        {% if team_form %}
+        <div class="matches-form-card">
+            <div>
+                <h3 class="fw-bold mb-2">Форма команди</h3>
+                <p class="text-muted mb-0">Останні матчі ФК Зазим'є</p>
+            </div>
+            <div class="matches-form-list">
+                {% for item in team_form %}
+                <span class="form-dot form-dot--{{ item.result }}">{{ item.label }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="matches-section bg-light">
+    <div class="container">
+        <h2 class="fw-bold">Майбутні матчі</h2>
+        <div class="matches-grid">
+            {% for match in upcoming_matches %}
+            <article class="match-card match-card--upcoming">
+                {% if forloop.first %}
+                <span class="match-card__badge">Найближчий матч</span>
+                {% endif %}
+                <h3>{{ match.team.name }} vs {{ match.opponent.name }}</h3>
+                <dl class="match-meta">
+                    <div>
+                        <dt>Дата</dt>
+                        <dd>{{ match.match_date|date:"d.m.Y о H:i" }}</dd>
+                    </div>
+                    <div>
+                        <dt>Місце</dt>
+                        <dd>
+                            {% if match.location and match.location != 'N/A' %}
+                            {{ match.location }}
+                            {% else %}
+                            уточнюється
+                            {% endif %}
+                        </dd>
+                    </div>
+                </dl>
+            </article>
+            {% empty %}
+            <div class="matches-empty-state">
+                <p class="mb-0">Майбутні матчі поки не заплановано.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="matches-section">
+    <div class="container">
+        <h2 class="fw-bold">Зіграні матчі</h2>
+        <div class="matches-grid">
+            {% for item in played_matches %}
+            <article class="match-card match-card--played match-card--{{ item.result }}">
+                <p class="match-card__date">{{ item.match.match_date|date:"d.m.Y" }}</p>
+                <h3>{{ item.match.team.name }} vs {{ item.match.opponent.name }}</h3>
+                <div class="match-score">{{ item.match.team_goals }} : {{ item.match.opponent_goals }}</div>
+                <p class="match-result match-result--{{ item.result }}">
+                    {% if item.result == 'win' %}Перемога{% elif item.result == 'draw' %}Нічия{% else %}Поразка{% endif %}
+                </p>
+                <p class="text-muted mb-0">
+                    {% if item.match.location and item.match.location != 'N/A' %}
+                    {{ item.match.location }}
+                    {% else %}
+                    Місце уточнюється
+                    {% endif %}
+                </p>
+            </article>
+            {% empty %}
+            <div class="matches-empty-state">
+                <p class="mb-0">Зіграних матчів поки немає.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="matches-cta text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Хочете записати дитину до команди?</h2>
+        <p class="lead mb-4">Приходьте на пробне тренування та познайомтеся з командою.</p>
+        <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">Записатися на тренування</a>
+    </div>
+</section>
+{% endblock %}

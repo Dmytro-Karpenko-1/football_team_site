@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load static %}
+{% load hero_tags %}
+
+{% block title %}ФК Зазим'є - дитяча футбольна команда{% endblock %}
+
+{% block content %}
+{% hero_background 'home' as hero_bg %}
+
+<section class="home-hero text-white" style="background: {{ hero_bg }};">
+    <div class="home-hero__overlay"></div>
+    <div class="container-fluid home-hero__content">
+        <img src="{% static 'images/logo.png' %}" alt="Логотип ФК Зазим'є" class="home-hero__logo">
+        <h1 class="home-hero__title">ФК Зазим'є — дитяча футбольна команда (2018 р.н.)</h1>
+        <p class="home-hero__subtitle">Тренування 3 рази на тиждень • Ігри на вихідних</p>
+        <div class="home-hero__actions">
+            <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">Записатися на тренування</a>
+            <a href="{% url 'team:matches' %}" class="btn btn-outline-light btn-lg fw-bold">Матчі</a>
+        </div>
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="container">
+        <div class="home-section__narrow">
+            <h2 class="fw-bold">Про команду</h2>
+            <p class="lead text-muted">
+                ФК Зазим'є — дитяча футбольна команда з села Зазим'є для дітей 2018 року народження.
+                Ми допомагаємо дітям знайомитися з футболом через рух, гру, дисципліну та підтримку команди.
+            </p>
+            <p class="text-muted">
+                На тренуваннях діти розвивають координацію, швидкість, витривалість і базові футбольні навички.
+                Головний акцент — безпечний розвиток, регулярність і задоволення від гри.
+            </p>
+            <p class="text-muted mb-0">
+                Команда тренується протягом тижня, а на вихідних бере участь у матчах своєї вікової групи.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="home-section bg-light">
+    <div class="container">
+        <h2 class="fw-bold">Що отримує дитина</h2>
+        <div class="home-feature-grid">
+            <article class="home-feature-card">
+                <span class="home-feature-card__icon">⚽</span>
+                <h3>Футбольна база</h3>
+                <p>Ведення м'яча, передачі, удари, перші ігрові рішення та впевненість на полі.</p>
+            </article>
+            <article class="home-feature-card">
+                <span class="home-feature-card__icon">🏃</span>
+                <h3>Фізичний розвиток</h3>
+                <p>Координація, швидкість, витривалість і правильна рухова активність для цього віку.</p>
+            </article>
+            <article class="home-feature-card">
+                <span class="home-feature-card__icon">🤝</span>
+                <h3>Командність</h3>
+                <p>Діти вчаться підтримувати одне одного, домовлятися та грати разом.</p>
+            </article>
+            <article class="home-feature-card">
+                <span class="home-feature-card__icon">🧠</span>
+                <h3>Дисципліна</h3>
+                <p>Регулярні тренування формують уважність, відповідальність і повагу до правил.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-5">
+                <h2 class="fw-bold">Тренування</h2>
+                <p class="text-muted mb-0">
+                    Заняття проходять у форматі, який підходить дітям 2018 року народження: багато руху,
+                    роботи з м'ячем і простих ігрових вправ.
+                </p>
+            </div>
+            <div class="col-lg-7">
+                <ul class="home-training-list">
+                    <li>3 тренування на тиждень</li>
+                    <li>Розминка, координація та швидкість</li>
+                    <li>Базова техніка: м'яч, пас, удар</li>
+                    <li>Ігрові формати 3v3 та 5v5</li>
+                    <li>Підготовка до матчів на вихідних</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="home-section bg-light">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-end mb-4">
+            <h2 class="fw-bold mb-0">Останні матчі</h2>
+            <a href="{% url 'team:matches' %}" class="btn btn-primary fw-bold">Всі матчі</a>
+        </div>
+        <div class="home-match-grid">
+            {% for match in recent_matches %}
+            <article class="home-match-card">
+                <p class="home-match-card__date">{{ match.match_date|date:"d.m.Y" }}</p>
+                <h3>{{ match.team.name }} vs {{ match.opponent.name }}</h3>
+                <div class="home-match-card__score">{{ match.team_goals }} : {{ match.opponent_goals }}</div>
+                <p class="text-muted mb-0">{{ match.location|default:"Локацію буде уточнено" }}</p>
+            </article>
+            {% empty %}
+            <div class="home-empty-state">
+                <p class="mb-0">Матчі поки не додано.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="home-section">
+    <div class="container">
+        <h2 class="fw-bold">Життя команди</h2>
+        <div class="home-gallery-grid">
+            <div class="home-gallery-item home-gallery-item--one"></div>
+            <div class="home-gallery-item home-gallery-item--two"></div>
+            <div class="home-gallery-item home-gallery-item--three"></div>
+            <div class="home-gallery-item home-gallery-item--four"></div>
+            <div class="home-gallery-item home-gallery-item--five"></div>
+            <div class="home-gallery-item home-gallery-item--six"></div>
+            <div class="home-gallery-item home-gallery-item--seven"></div>
+            <div class="home-gallery-item home-gallery-item--eight"></div>
+            <div class="home-gallery-item home-gallery-item--nine"></div>
+        </div>
+    </div>
+</section>
+
+<section class="home-section bg-light">
+    <div class="container">
+        <h2 class="fw-bold">Відгуки батьків</h2>
+        <div class="home-testimonial-grid">
+            <blockquote class="home-testimonial-card">
+                <p>“Дитина з задоволенням ходить на тренування, стала більш впевненою та активною.”</p>
+            </blockquote>
+            <blockquote class="home-testimonial-card">
+                <p>“Подобається, що тренування проходять системно, але без зайвого тиску на дітей.”</p>
+            </blockquote>
+            <blockquote class="home-testimonial-card">
+                <p>“Дитина чекає матчів на вихідних і дуже радіє команді.”</p>
+            </blockquote>
+        </div>
+    </div>
+</section>
+
+<section class="home-final-cta text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Хочете записати дитину на футбол?</h2>
+        <p class="lead mb-4">Залиште заявку, і ми підкажемо, як потрапити на пробне тренування.</p>
+        <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">Записатися на тренування</a>
+    </div>
+</section>
+
+{% endblock %}

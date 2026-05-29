@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load hero_tags %}
+
+{% block title %}Блог команди - ФК Зазим'є{% endblock %}
+
+{% block content %}
+{% hero_background 'blog' as hero_bg %}
+
+<section class="blog-hero text-white" style="background: {{ hero_bg }};">
+    <div class="blog-hero__overlay"></div>
+    <div class="container blog-hero__content">
+        <h1 class="display-4 fw-bold mb-3">Блог команди</h1>
+        <p class="lead mb-0">Життя команди, тренування та матчі</p>
+    </div>
+</section>
+
+<section class="blog-section">
+    <div class="container">
+        <div class="blog-toolbar">
+            <div>
+                <h2 class="fw-bold mb-2">Останні публікації</h2>
+                <p class="text-muted mb-0">Новини дитячої команди ФК Зазим'є</p>
+            </div>
+            <div class="blog-categories" aria-label="Категорії блогу">
+                <span>Усі</span>
+                <span>Тренування</span>
+                <span>Матчі</span>
+                <span>Команда</span>
+            </div>
+        </div>
+
+        <div class="blog-post-grid">
+            {% for post in page_obj %}
+            <article class="blog-post-card">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" class="blog-post-card__image" alt="{{ post.title }}">
+                {% else %}
+                <div class="blog-post-card__image blog-post-card__image--placeholder">
+                    <span>ФК Зазим'є</span>
+                </div>
+                {% endif %}
+                <div class="blog-post-card__body">
+                    <p class="blog-post-card__date">{{ post.created_at|date:"d.m.Y" }}</p>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content|striptags|truncatewords:22 }}</p>
+                    <a href="{% url 'team:blog_detail' post.id %}" class="btn btn-primary fw-bold">Читати</a>
+                </div>
+            </article>
+            {% empty %}
+            <div class="blog-empty-state">
+                <p class="mb-0">Публікації поки не додано.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Навігація блогу" class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Далі</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+
+<section class="blog-cta text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Хочете записати дитину на футбол?</h2>
+        <p class="lead mb-4">Приходьте на пробне тренування та познайомтеся з командою.</p>
+        <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">Записатися на тренування</a>
+    </div>
+</section>
+{% endblock %}

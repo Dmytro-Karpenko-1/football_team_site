@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load hero_tags %}
+
+{% block title %}Записатися на тренування - ФК Зазим'є{% endblock %}
+
+{% block content %}
+{% hero_background 'join' as hero_bg %}
+
+<section class="join-hero text-white" style="background: {{ hero_bg }};">
+    <div class="join-hero__overlay"></div>
+    <div class="container join-hero__content">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <p class="club-kicker mb-3">Пробне тренування</p>
+                <h1 class="join-hero__title">Запишіть дитину на пробне тренування</h1>
+                <p class="join-hero__subtitle">Безкоштовно • Без зобов'язань</p>
+            </div>
+            <div class="col-lg-5">
+                <div class="join-benefits">
+                    <div class="join-benefit">2018 рік народження</div>
+                    <div class="join-benefit">3 тренування на тиждень</div>
+                    <div class="join-benefit">Ігри на вихідних</div>
+                    <div class="join-benefit">Дружня атмосфера</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="join-section" id="join-form">
+    <div class="container">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+                <h2 class="fw-bold">Залиште заявку</h2>
+                <p class="lead text-muted">
+                    Заповніть коротку форму. Ми зв'яжемося з вами та запросимо на тренування.
+                </p>
+                <div class="join-contact-options">
+                    <a href="https://t.me/" class="btn btn-outline-primary btn-lg fw-bold" target="_blank" rel="noopener">
+                        Telegram
+                    </a>
+                    <a href="tel:+380000000000" class="btn btn-outline-primary btn-lg fw-bold">
+                        Call
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                {% if success %}
+                <div class="join-success" role="alert">
+                    <h3 class="fw-bold mb-2">Заявку надіслано</h3>
+                    <p class="mb-0">Ми зв'яжемося з вами та запросимо на тренування.</p>
+                </div>
+                {% endif %}
+
+                <div class="join-form-card">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label for="{{ form.child_name.id_for_label }}" class="form-label fw-bold">
+                                Ім'я дитини <span class="text-danger">*</span>
+                            </label>
+                            {{ form.child_name }}
+                            {% if form.child_name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.child_name.errors %}{{ error }}{% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.parent_phone.id_for_label }}" class="form-label fw-bold">
+                                Телефон батьків <span class="text-danger">*</span>
+                            </label>
+                            {{ form.parent_phone }}
+                            {% if form.parent_phone.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.parent_phone.errors %}{{ error }}{% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.age.id_for_label }}" class="form-label fw-bold">
+                                Вік дитини <span class="text-danger">*</span>
+                            </label>
+                            {{ form.age }}
+                            {% if form.age.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.age.errors %}{{ error }}{% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold join-submit">
+                            Записатися на тренування
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<a href="#join-form" class="btn btn-primary fw-bold join-sticky-cta">Записатися на тренування</a>
+{% endblock %}

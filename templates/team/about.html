@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+{% load hero_tags %}
+
+{% block title %}Про нас - ФК Зазим'є{% endblock %}
+
+{% block content %}
+{% hero_background 'about' as hero_bg %}
+
+<section class="hero-section about-hero text-white" style="background: {{ hero_bg }};">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <p class="club-kicker mb-3">ФК Зазим'є · 2018 р.н.</p>
+                <h1 class="display-4 fw-bold mb-3">Дитяча футбольна команда в с. Зазим'є</h1>
+                <p class="lead mb-4">Розвиваємо дітей через футбол, дисципліну та командну гру</p>
+                <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">
+                    Записатися на пробне тренування
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 about-team-section">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-5">
+                <div class="about-feature-card">
+                    <span class="about-feature-card__number">2018</span>
+                    <span class="about-feature-card__label">рік народження</span>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <h2 class="fw-bold">Про команду</h2>
+                <p class="lead text-muted">
+                    Ми — дитяча футбольна команда з села Зазим'є для дітей 2018 року народження.
+                    Тренування спрямовані не тільки на футбол, а й на загальний фізичний розвиток дитини:
+                    координацію, швидкість, витривалість та впевненість у собі.
+                </p>
+                <p class="text-muted mb-0">
+                    Наша ціль — не просто навчити грати у футбол, а сформувати команду, в якій діти ростуть
+                    разом, підтримують один одного та отримують задоволення від гри.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+                <h2 class="fw-bold">Як проходять тренування</h2>
+                <p class="text-muted mb-0">
+                    Ми не перевантажуємо дітей складною тактикою — у цьому віці головне навчитися відчувати
+                    м'яч, рухатися та грати з задоволенням.
+                </p>
+            </div>
+            <div class="col-lg-7">
+                <div class="training-grid">
+                    <div class="training-item">3 тренування на тиждень</div>
+                    <div class="training-item">Базові футбольні навички</div>
+                    <div class="training-item">Координація та швидкість</div>
+                    <div class="training-item">Ігрові формати 3v3 та 5v5</div>
+                    <div class="training-item">Робота в команді</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-bold">Ігри та змагання</h2>
+                <p class="lead text-muted">
+                    На вихідних команда бере участь у чемпіонаті Броварського району серед дітей своєї
+                    вікової групи.
+                </p>
+                <p class="text-muted mb-0">Це дає можливість застосовувати навички в грі, набиратися досвіду,
+                    вчитися взаємодії в команді та звикати до справжніх матчів.</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="competition-card">
+                    <div>
+                        <span class="competition-card__icon">🏆</span>
+                        <h3 class="fw-bold mb-2">Чемпіонат Броварського району</h3>
+                        <p class="mb-0">Матчі, емоції та перший командний досвід для юних футболістів.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="fw-bold">Тренер</h2>
+        <div class="row g-4">
+            {% for coach in coaches|slice:":1" %}
+            <div class="col-lg-5">
+                <div class="coach-photo-card">
+                    {% if coach.photo %}
+                    <img src="{{ coach.photo.url }}" alt="{{ coach.first_name }} {{ coach.last_name }}">
+                    {% else %}
+                    <img src="{% static 'images/logo.png' %}" alt="Логотип ФК Зазим'є">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="coach-content">
+                    <p class="text-muted mb-2">{{ coach.position }}</p>
+                    <h3 class="fw-bold mb-3">{{ coach.first_name }} {{ coach.last_name }}</h3>
+                    <p class="lead text-muted">
+                        Тренер працює з дітьми та допомагає кожному гравцю розкрити свій потенціал.
+                        Основний фокус — розвиток техніки, впевненості та любові до футболу.
+                    </p>
+                    <p class="text-muted mb-0">Кожна дитина отримує увагу та можливість проявити себе.</p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-lg-5">
+                <div class="coach-photo-card">
+                    <img src="{% static 'images/logo.png' %}" alt="Логотип ФК Зазим'є">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="coach-content">
+                    <h3 class="fw-bold mb-3">Тренер команди</h3>
+                    <p class="lead text-muted">
+                        Тренер працює з дітьми та допомагає кожному гравцю розкрити свій потенціал.
+                        Основний фокус — розвиток техніки, впевненості та любові до футболу.
+                    </p>
+                    <p class="text-muted mb-0">Кожна дитина отримує увагу та можливість проявити себе.</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="fw-bold">Життя команди</h2>
+        <div class="about-gallery">
+            <div class="about-gallery__item about-gallery__item--training">
+                <span>Тренування</span>
+            </div>
+            <div class="about-gallery__item about-gallery__item--matches">
+                <span>Матчі</span>
+            </div>
+            <div class="about-gallery__item about-gallery__item--emotion">
+                <span>Емоції</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="fw-bold">Відгуки</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <blockquote class="testimonial-card">
+                    <p>“Дитина з задоволенням ходить на тренування, стала більш впевненою та активною.”</p>
+                </blockquote>
+            </div>
+            <div class="col-md-6">
+                <blockquote class="testimonial-card">
+                    <p>“Дякуємо за підхід до дітей — видно, що тренер працює на результат і розвиток.”</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 about-final-cta text-white">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-3">Хочете, щоб дитина розвивалась через футбол?</h2>
+        <p class="lead mb-4">Запишіться на пробне тренування і подивіться, як проходять заняття</p>
+        <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">Записатися на тренування</a>
+    </div>
+</section>
+{% endblock %}
