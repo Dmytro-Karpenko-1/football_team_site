@@ -203,6 +203,10 @@ body {
     flex-wrap: wrap;
 }
 
+.home-hero__actions .btn-outline-light:hover {
+    color: var(--primary-color);
+}
+
 .home-section {
     padding: 5rem 0;
 }
