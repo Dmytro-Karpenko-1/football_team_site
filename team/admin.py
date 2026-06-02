@@ -69,7 +69,7 @@ class CoachAdmin(admin.ModelAdmin):
 
 @admin.register(Match)
 class MatchAdmin(admin.ModelAdmin):
-    list_display = ('team', 'opponent', 'match_date', 'status')
+    list_display = ('team', 'opponent', 'match_date', 'status', 'youtube_url')
     list_filter = ('team', 'status', 'match_date')
     search_fields = ('opponent__name', 'team__name')
 

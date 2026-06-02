@@ -1,4 +1,5 @@
 from datetime import date
+from urllib.parse import parse_qs, urlparse
 
 from django.db import models
 
@@ -161,6 +162,11 @@ class Match(models.Model):
     location = models.CharField(max_length=100)
     team_goals = models.IntegerField(null=True, blank=True)
     opponent_goals = models.IntegerField(null=True, blank=True)
+    youtube_url = models.URLField(
+        'YouTube відео',
+        blank=True,
+        help_text='Вставте посилання на YouTube, наприклад https://youtu.be/... або https://www.youtube.com/watch?v=...',
+    )
     status = models.CharField(
         max_length=10,
         choices=[('upcoming', 'Майбутній'), ('played', 'Зіграний')],
@@ -171,6 +177,28 @@ class Match(models.Model):
 
     def __str__(self):
         return f"{self.team} vs {self.opponent}"
+
+    @property
+    def youtube_embed_url(self):
+        if not self.youtube_url:
+            return ''
+
+        parsed_url = urlparse(self.youtube_url)
+        hostname = parsed_url.netloc.lower().replace('www.', '')
+        video_id = ''
+
+        if hostname == 'youtu.be':
+            video_id = parsed_url.path.strip('/').split('/')[0]
+        elif hostname in {'youtube.com', 'm.youtube.com'}:
+            if parsed_url.path.startswith('/watch'):
+                video_id = parse_qs(parsed_url.query).get('v', [''])[0]
+            elif parsed_url.path.startswith('/shorts/') or parsed_url.path.startswith('/embed/'):
+                video_id = parsed_url.path.strip('/').split('/')[1]
+
+        if not video_id:
+            return ''
+
+        return f'https://www.youtube.com/embed/{video_id}'
 
     class Meta:
         verbose_name = 'Матч'

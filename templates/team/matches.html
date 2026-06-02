@@ -66,7 +66,28 @@
                         </dd>
                     </div>
                 </dl>
+                {% if match.youtube_embed_url %}
+                <button class="match-video-button" type="button" data-bs-toggle="modal" data-bs-target="#matchVideo{{ match.id }}">
+                    <span class="match-video-button__icon" aria-hidden="true"></span>
+                    Відео
+                </button>
+                {% endif %}
             </article>
+            {% if match.youtube_embed_url %}
+            <div class="modal fade match-video-modal" id="matchVideo{{ match.id }}" tabindex="-1" aria-labelledby="matchVideoLabel{{ match.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="matchVideoLabel{{ match.id }}">{{ match.team.name }} vs {{ match.opponent.name }}</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe data-src="{{ match.youtube_embed_url }}" title="Відео матчу {{ match.team.name }} vs {{ match.opponent.name }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             {% empty %}
             <div class="matches-empty-state">
                 <p class="mb-0">Майбутні матчі поки не заплановано.</p>
@@ -95,7 +116,28 @@
                     Місце уточнюється
                     {% endif %}
                 </p>
+                {% if item.match.youtube_embed_url %}
+                <button class="match-video-button" type="button" data-bs-toggle="modal" data-bs-target="#matchVideo{{ item.match.id }}">
+                    <span class="match-video-button__icon" aria-hidden="true"></span>
+                    Відео
+                </button>
+                {% endif %}
             </article>
+            {% if item.match.youtube_embed_url %}
+            <div class="modal fade match-video-modal" id="matchVideo{{ item.match.id }}" tabindex="-1" aria-labelledby="matchVideoLabel{{ item.match.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="matchVideoLabel{{ item.match.id }}">{{ item.match.team.name }} vs {{ item.match.opponent.name }}</h3>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe data-src="{{ item.match.youtube_embed_url }}" title="Відео матчу {{ item.match.team.name }} vs {{ item.match.opponent.name }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
             {% empty %}
             <div class="matches-empty-state">
                 <p class="mb-0">Зіграних матчів поки немає.</p>
@@ -112,4 +154,24 @@
         <a href="{% url 'team:join' %}" class="btn btn-light btn-lg fw-bold">Записатися на тренування</a>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.match-video-modal').forEach((modal) => {
+    const iframe = modal.querySelector('iframe');
+
+    modal.addEventListener('shown.bs.modal', () => {
+        if (iframe && !iframe.src) {
+            iframe.src = iframe.dataset.src;
+        }
+    });
+
+    modal.addEventListener('hidden.bs.modal', () => {
+        if (iframe) {
+            iframe.src = '';
+        }
+    });
+});
+</script>
 {% endblock %}
