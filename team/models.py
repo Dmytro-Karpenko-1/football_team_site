@@ -62,6 +62,24 @@ class HomeGalleryImage(models.Model):
         ordering = ['order', 'id']
 
 
+class AboutGalleryItem(models.Model):
+    """Image card displayed in the about page team life section."""
+    title = models.CharField(max_length=120)
+    image = models.ImageField(upload_to='about_gallery/')
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Фото сторінки Про нас'
+        verbose_name_plural = 'Фото сторінки Про нас'
+        ordering = ['order', 'id']
+
+
 class Team(models.Model):
     """Team model"""
     name = models.CharField(max_length=100)

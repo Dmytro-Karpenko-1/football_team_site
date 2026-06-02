@@ -482,6 +482,7 @@ body {
 }
 
 .about-gallery__item {
+    position: relative;
     min-height: 260px;
     border-radius: 8px;
     display: flex;
@@ -490,21 +491,35 @@ body {
     color: #ffffff;
     font-size: 1.35rem;
     font-weight: 900;
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
+    background: #0b4ea2;
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
 }
 
-.about-gallery__item--training {
-    background-image: linear-gradient(135deg, rgba(6, 37, 79, 0.82), rgba(11, 78, 162, 0.58)), url('/media/team/c407216a-2974-4ab2-ad0a-2f7933e1ae62.png');
+.about-gallery__item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(6, 37, 79, 0.82), rgba(11, 78, 162, 0.58));
+    z-index: 1;
 }
 
-.about-gallery__item--matches {
-    background-image: linear-gradient(135deg, rgba(6, 37, 79, 0.82), rgba(11, 78, 162, 0.58)), url('/media/blog/913ab2b4-889a-4368-9d9a-af8559889b4a.png');
+.about-gallery__item img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
 }
 
-.about-gallery__item--emotion {
-    background-image: linear-gradient(135deg, rgba(6, 37, 79, 0.82), rgba(11, 78, 162, 0.58)), url('/static/images/logo.png');
+.about-gallery__item:hover img {
+    transform: scale(1.08);
+}
+
+.about-gallery__item span {
+    position: relative;
+    z-index: 2;
 }
 
 .testimonial-card {

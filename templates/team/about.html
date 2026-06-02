@@ -145,15 +145,16 @@
     <div class="container">
         <h2 class="fw-bold">Життя команди</h2>
         <div class="about-gallery">
-            <div class="about-gallery__item about-gallery__item--training">
-                <span>Тренування</span>
+            {% for gallery_item in about_gallery_items %}
+            <article class="about-gallery__item">
+                <img src="{{ gallery_item.image.url }}" alt="{{ gallery_item.title }}" loading="lazy">
+                <span>{{ gallery_item.title }}</span>
+            </article>
+            {% empty %}
+            <div class="home-empty-state">
+                <p class="mb-0">Фото поки не додано.</p>
             </div>
-            <div class="about-gallery__item about-gallery__item--matches">
-                <span>Матчі</span>
-            </div>
-            <div class="about-gallery__item about-gallery__item--emotion">
-                <span>Емоції</span>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

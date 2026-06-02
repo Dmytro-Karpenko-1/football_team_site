@@ -3,6 +3,7 @@ from .models import (
     HeroBackground,
     HomeHeroVisual,
     HomeGalleryImage,
+    AboutGalleryItem,
     Team,
     Player,
     Coach,
@@ -30,6 +31,15 @@ class HomeHeroVisualAdmin(admin.ModelAdmin):
 
 @admin.register(HomeGalleryImage)
 class HomeGalleryImageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image', 'order', 'is_active', 'updated_at')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('title',)
+    readonly_fields = ('created_at', 'updated_at')
+
+
+@admin.register(AboutGalleryItem)
+class AboutGalleryItemAdmin(admin.ModelAdmin):
     list_display = ('title', 'image', 'order', 'is_active', 'updated_at')
     list_editable = ('order', 'is_active')
     list_filter = ('is_active',)

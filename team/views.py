@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Team, Player, Coach, Match, BlogPost, Standing, HomeGalleryImage
+from .models import Team, Player, Coach, Match, BlogPost, Standing, HomeGalleryImage, AboutGalleryItem
 from .forms import JoinTeamForm
 
 
@@ -28,6 +28,7 @@ def about(request):
         'teams': teams,
         'players': players,
         'coaches': coaches,
+        'about_gallery_items': AboutGalleryItem.objects.filter(is_active=True),
     }
     return render(request, 'team/about.html', context)
 

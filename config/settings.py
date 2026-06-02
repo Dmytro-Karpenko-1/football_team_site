@@ -146,6 +146,7 @@ JAZZMIN_SETTINGS = {
         'team.HeroBackground': 'fas fa-image',
         'team.HomeHeroVisual': 'fas fa-images',
         'team.HomeGalleryImage': 'fas fa-camera',
+        'team.AboutGalleryItem': 'fas fa-photo-video',
     },
     'show_sidebar': True,
     'navigation_expanded': True,
