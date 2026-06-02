@@ -82,7 +82,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
                         </div>
                         <div class="modal-body">
-                            <iframe data-src="{{ match.youtube_embed_url }}" title="Відео матчу {{ match.team.name }} vs {{ match.opponent.name }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe data-src="{{ match.youtube_embed_url }}" title="Відео матчу {{ match.team.name }} vs {{ match.opponent.name }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрити"></button>
                         </div>
                         <div class="modal-body">
-                            <iframe data-src="{{ item.match.youtube_embed_url }}" title="Відео матчу {{ item.match.team.name }} vs {{ item.match.opponent.name }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <iframe data-src="{{ item.match.youtube_embed_url }}" title="Відео матчу {{ item.match.team.name }} vs {{ item.match.opponent.name }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -163,7 +163,8 @@ document.querySelectorAll('.match-video-modal').forEach((modal) => {
 
     modal.addEventListener('shown.bs.modal', () => {
         if (iframe && !iframe.src) {
-            iframe.src = iframe.dataset.src;
+            const separator = iframe.dataset.src.includes('?') ? '&' : '?';
+            iframe.src = `${iframe.dataset.src}${separator}origin=${encodeURIComponent(window.location.origin)}`;
         }
     });
 
