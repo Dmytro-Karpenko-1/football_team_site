@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% load hero_tags %}
 
 {% block title %}Турнірна таблиця - ФК Зазим'є{% endblock %}
@@ -26,8 +27,7 @@
                 </p>
             </div>
             <div class="season-summary__medal">
-                <span>3</span>
-                <strong>місце</strong>
+                <img src="{% static 'images/third-place-medal-2026.webp' %}" alt="Третє місце Чемпіонату Лівобережжя 2026">
             </div>
         </div>
 
