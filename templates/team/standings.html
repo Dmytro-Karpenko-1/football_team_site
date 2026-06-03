@@ -16,12 +16,66 @@
 
 <section class="standings-page-section">
     <div class="container">
-        <div class="standings-intro">
-            <h2 class="fw-bold">ФК Зазим'є у чемпіонаті</h2>
-            <p class="text-muted mb-0">
-                Команда бере участь у дитячому чемпіонаті своєї вікової групи. Таблиця допомагає бачити
-                поточне місце, кількість зіграних матчів, різницю голів та очки.
-            </p>
+        <div class="season-summary">
+            <div class="season-summary__content">
+                <p class="club-kicker mb-3">Підсумок сезону</p>
+                <h2 class="fw-bold">ФК Зазим'є — бронзовий призер Чемпіонату Лівобережжя</h2>
+                <p class="lead text-muted mb-0">
+                    Команда посіла 3 місце у 1 лізі весняної серії 2026 року після переможного стикового матчу
+                    з ФК Княжичі.
+                </p>
+            </div>
+            <div class="season-summary__medal">
+                <span>3</span>
+                <strong>місце</strong>
+            </div>
+        </div>
+
+        <div class="season-achievement-grid">
+            <article class="season-achievement-card season-achievement-card--bronze">
+                <span>Результат</span>
+                <strong>3 місце</strong>
+            </article>
+            <article class="season-achievement-card">
+                <span>Турнір</span>
+                <strong>1 ліга</strong>
+            </article>
+            <article class="season-achievement-card">
+                <span>Серія</span>
+                <strong>Весна 2026</strong>
+            </article>
+            <article class="season-achievement-card">
+                <span>Команда</span>
+                <strong>2018 р.н.</strong>
+            </article>
+        </div>
+
+        <div class="decider-match-card">
+            <div>
+                <p class="club-kicker mb-2">Стиковий матч за призове місце</p>
+                <h3 class="fw-bold mb-2">
+                    {% if decider_match %}
+                    {{ decider_match.team.name }} vs {{ decider_match.opponent.name }}
+                    {% else %}
+                    ФК Зазим'є vs ФК Княжичі
+                    {% endif %}
+                </h3>
+                <p class="text-muted mb-0">
+                    {% if decider_match %}
+                    {{ decider_match.match_date|date:"d.m.Y" }}
+                    {% if decider_match.location and decider_match.location != 'N/A' %} · {{ decider_match.location }}{% endif %}
+                    {% else %}
+                    31.05.2026
+                    {% endif %}
+                </p>
+            </div>
+            <div class="decider-match-card__score">
+                {% if decider_match %}
+                {{ decider_match.team_goals }} : {{ decider_match.opponent_goals }}
+                {% else %}
+                5 : 2
+                {% endif %}
+            </div>
         </div>
 
         {% if recent_form %}
@@ -42,46 +96,60 @@
         </div>
         {% endif %}
 
-        <div class="standings-table-wrapper table-wrapper">
-            <div class="container-table">
-            <table class="table standings-table standings-table-modern">
-                <thead>
-                    <tr>
-                        <th class="text-center standings-rank"></th>
-                        <th class="standings-team-heading">Команди</th>
-                        <th class="text-center standings-number">І</th>
-                        <th class="text-center standings-number">Різн.</th>
-                        <th class="text-center standings-number">О</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for standing in standings %}
-                    <tr class="align-middle {% if standing.team.name == "ФК Зазим'є" %}highlight-team{% endif %}">
-                        <td class="text-center fw-bold">
-                            <span class="rank-badge {% if standing.position == 1 %}rank-badge--gold{% elif standing.position == 2 %}rank-badge--silver{% elif standing.position == 3 %}rank-badge--bronze{% endif %}">
-                                {{ standing.position }}
-                            </span>
-                        </td>
-                        <td>
-                            <strong>{{ standing.display_name|default:standing.team.name }}</strong>
-                        </td>
-                        <td class="text-center">{{ standing.played }}</td>
-                        <td class="text-center">
-                            {% if standing.goal_difference > 0 %}+{% endif %}{{ standing.goal_difference }}
-                        </td>
-                        <td class="text-center">
-                            <span class="points-pill">{{ standing.points }}</span>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5" class="text-center text-muted py-4">
-                            Дані про таблицю поки недоступні
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="standings-archive">
+            <div class="standings-archive__header">
+                <div>
+                    <h3 class="fw-bold mb-2">Архів сезону: весняна серія 2026</h3>
+                    <p class="text-muted mb-0">Підсумкова таблиця чемпіонату доступна нижче.</p>
+                </div>
+                <button class="btn btn-primary fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#seasonTableArchive" aria-expanded="false" aria-controls="seasonTableArchive">
+                    Показати підсумкову таблицю
+                </button>
+            </div>
+
+            <div class="collapse" id="seasonTableArchive">
+                <div class="standings-table-wrapper table-wrapper">
+                    <div class="container-table">
+                    <table class="table standings-table standings-table-modern">
+                        <thead>
+                            <tr>
+                                <th class="text-center standings-rank"></th>
+                                <th class="standings-team-heading">Команди</th>
+                                <th class="text-center standings-number">І</th>
+                                <th class="text-center standings-number">Різн.</th>
+                                <th class="text-center standings-number">О</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for standing in standings %}
+                            <tr class="align-middle {% if standing.team.name == "ФК Зазим'є" %}highlight-team{% endif %}">
+                                <td class="text-center fw-bold">
+                                    <span class="rank-badge {% if standing.position == 1 %}rank-badge--gold{% elif standing.position == 2 %}rank-badge--silver{% elif standing.position == 3 %}rank-badge--bronze{% endif %}">
+                                        {{ standing.position }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <strong>{{ standing.display_name|default:standing.team.name }}</strong>
+                                </td>
+                                <td class="text-center">{{ standing.played }}</td>
+                                <td class="text-center">
+                                    {% if standing.goal_difference > 0 %}+{% endif %}{{ standing.goal_difference }}
+                                </td>
+                                <td class="text-center">
+                                    <span class="points-pill">{{ standing.points }}</span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    Дані про таблицю поки недоступні
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
             </div>
         </div>
 

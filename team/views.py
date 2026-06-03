@@ -106,6 +106,13 @@ def matches(request):
 def standings(request):
     """Standings view"""
     standings = Standing.objects.all().order_by('position')
+    decider_match = (
+        Match.objects
+        .select_related('team', 'opponent')
+        .filter(status='played', team__name="ФК Зазим'є", opponent__name__icontains='Княжич')
+        .order_by('-match_date')
+        .first()
+    )
     recent_team_matches = (
         Match.objects
         .select_related('team', 'opponent')
@@ -132,6 +139,7 @@ def standings(request):
 
     context = {
         'standings': standings,
+        'decider_match': decider_match,
         'recent_form': recent_form,
     }
     return render(request, 'team/standings.html', context)
